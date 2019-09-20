@@ -1,0 +1,237 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+@media screen {
+  h1 {
+    font-weight: 600;
+    margin-bottom: 30px;
+    line-height: 33px;
+    font-size: 30px; } }
+@media screen and (min-width: 375px) {
+  h1 {
+    margin-bottom: 40px; } }
+@media screen and (min-width: 768px) {
+  h1 {
+    line-height: 40px;
+    font-size: 36px; } }
+@media screen and (min-width: 900px) {
+  h1 {
+    margin-bottom: 50px;
+    line-height: 47px;
+    font-size: 42px; } }
+@media screen and (max-width: 630px) {
+  h1 {
+    letter-spacing: -0.47px; } }
+
+@media screen {
+  h2 {
+    font-size: 30px;
+    line-height: 35px; } }
+@media screen and (min-width: 768px) {
+  h2 {
+    font-size: 40px;
+    line-height: 47px; } }
+
+@media screen {
+  h3 {
+    color: #092856;
+    font-size: 20px;
+    line-height: 21px;
+    line-height: 28px;
+    margin-bottom: 30px;
+    font-weight: normal; } }
+@media screen and (min-width: 768px) {
+  h3 {
+    font-size: 24px;
+    line-height: 32px; } }
+@media screen and (min-width: 900px) {
+  h3 {
+    font-size: 28px;
+    line-height: 38px; } }
+
+@media screen {
+  a,
+  button {
+    font-family: "Roboto", sans-serif;
+    text-decoration: none;
+    color: #109DFF; }
+    a:hover,
+    button:hover {
+      text-decoration: none;
+      color: inherit; }
+    a:focus,
+    button:focus {
+      outline: none; } }
+@media screen {
+  a.logo,
+  button.logo {
+    display: inline-block;
+    --logo-height: 40px;
+    --logo-width: 100px;
+    width: var(--logo-width);
+    height: var(--logo-height);
+    background-image: url("../img/logo.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    margin-right: 100px;
+    margin-right: auto;
+    flex: 0 0 var(--logo-width); } }
+@media screen and (min-width: 375px) {
+  a.logo,
+  button.logo {
+    --logo-height: 59px;
+    --logo-width: 147px; } }
+@media screen and (min-width: 1088px) {
+  a.logo,
+  button.logo {
+    margin-right: calc((100%/3) - var(--logo-width) + 12px); } }
+@media screen and (min-width: 1280px) {
+  a.logo,
+  button.logo {
+    --logo-width: 170px;
+    --logo-width: 230px;
+    --logo-height: 92px;
+    margin-right: 110px; } }
+@media screen {
+  a.logo-footer,
+  button.logo-footer {
+    --logo-width: 147px;
+    height: 39px;
+    background-image: url("../img/logo-white.svg");
+    margin-bottom: 25px; } }
+@media screen and (min-width: 375px) {
+  a.logo-footer,
+  button.logo-footer {
+    margin-bottom: 31px; } }
+@media screen and (min-width: 900px) {
+  a.logo-footer,
+  button.logo-footer {
+    --logo-width: 108px;
+    height: 29px;
+    margin-bottom: 23px; } }
+
+@media screen {
+  .wrapper {
+    margin: 0 auto;
+    --wrapper-gutter: 25px;
+    padding: 0 var(--wrapper-gutter);
+    width: 100%;
+    position: relative; } }
+@media screen and (min-width: 375px) {
+  .wrapper {
+    --wrapper-gutter: 30px; } }
+@media screen and (min-width: 768px) {
+  .wrapper {
+    --wrapper-gutter: 70px; } }
+@media screen and (min-width: 1280px) {
+  .wrapper {
+    padding: 0;
+    max-width: 1000px; } }
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    max-width: 1000px; } }
+@media screen and (min-width: 1515px) {
+  .wrapper {
+    max-width: 1300px; } }
+@media screen {
+  .wrapper.centered-elements {
+    display: flex;
+    justify-content: center;
+    align-items: center; } }
+
+@media screen {
+  .wrapper-fluid {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%; } }
+
+@media screen {
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column; } }
+
+@media screen {
+  .main-section {
+    flex: 1 0 auto; } }
+
+@media screen {
+  header {
+    margin-top: 100px; } }
+
+@media screen {
+  .footer-section {
+    background-color: #182A45;
+    color: #fff;
+    padding: 90px 0;
+    margin-top: 100px;
+    flex: none; } }
+@media screen and (min-width: 375px) {
+  .footer-section {
+    padding: 90px 0; } }
+@media screen and (min-width: 768px) {
+  .footer-section {
+    padding: 106px 0; } }
+@media screen and (min-width: 1000px) {
+  .footer-section {
+    margin-top: 120px; } }
+
+@media screen {
+  .project-table {
+    width: 100%;
+    background-color: #f5f5f5;
+    margin-top: 40px; } }
+@media screen {
+  .project-table .project {
+    display: flex;
+    padding: 15px;
+    margin-bottom: 15px; } }
+@media screen {
+  .project-table .project h2 {
+    width: 40%; } }
+.project-table .project .status-icon {
+  width: 20%; }
+@media screen {
+  .project-table .project h2 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 118%;
+    word-break: break-all; } }
+@media screen {
+  .project-table .project h2 a {
+    font-size: 16px;
+    line-height: 206%;
+    text-decoration-line: underline;
+    width: 100%; } }
+
+.project-notify-recipient {
+  text-align: right;
+  padding-top: 9px;
+  width: 40%; }
+
+@media screen {
+  .status-icon {
+    display: flex;
+    justify-content: center;
+    padding-top: 11px; } }
+.status-icon span {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background-color: #5cb85c;
+  border-radius: 50%; }
+
+.modal-content {
+  padding: 50px;
+  background: #f5f5f5;
+  border-radius: 25px; }
+  .modal-content p {
+    display: inline-block; }
+  @media screen {
+    .modal-content .mail.control {
+      display: flex;
+      align-items: center;
+      width: 100%; } }
+  .modal-content .mail.control button {
+    margin-left: auto; }
+
+/*# sourceMappingURL=style.css.map */
