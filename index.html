@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UpTime Okapi Projects</title>
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+  <!-- Bulma Version 0.7.5-->
+  <link rel="stylesheet" href="https://unpkg.com/bulma@0.7.5/css/bulma.min.css" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <header>
+    <div class="wrapper">
+      <h1>Uptime Okapi</h1>
+      <h3>Verifies whenever your project goes down and sends a notification.</h3>
+      <hr>
+    </div>
+  </header>
+  <main class="main-section">
+    <div class="wrapper">
+      <h2>Quick Status</h2>
+      <div class="project-table">
+        <div class="project">
+          <h2>Okapistudio Website <br><a href="http://okapistudio.com/" target="_blank">http://okapistudio.com/</a></h2>
+          <div class="status-icon"><span></span></div>
+          <p class="project-notify-recipient"><a href="#/" class="open-project-modal">Edit Mail Recipients</a></p>
+        </div>
+        <div class="project">
+          <h2>Okapistudio Website <br><a href="http://okapistudio.com/" target="_blank">http://okapistudio.com/</a></h2>
+          <div class="status-icon"><span></span></div>
+          <p class="project-notify-recipient"><a href="#/" class="open-project-modal">Edit Mail Recipients</a></p>
+        </div>
+      </div>
+      <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <form>
+            <h2>Recipients Mails:</h2>
+            <div class="field">
+              <div class="field is-grouped">
+                <div class="mail control">
+                  <p>some@mail.com</p><button class="button is-text">Remove Email</button>
+                </div>
+              </div>
+              <label class="label">New Email:</label>
+              <div class="control has-icons-left has-icons-right">
+                <input class="input is-danger" type="email" placeholder="Email input"
+                  value="notification@recipient.mail">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              </div>
+              <p class="help is-danger">This email is invalid</p>
+            </div>
+            <div class="field is-grouped">
+              <div class="control">
+                <button class="button is-link">Add Email</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+    </div>
+  </main>
+  <footer class="main-section footer-section">
+    <div class="wrapper">
+      <a href="http://okapistudio.com" target="_blank" class="logo logo-footer"></a>
+      <p class="copyright">Copyright © OKAPI. All rights reserved.</p>
+    </div>
+  </footer>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
