@@ -14,9 +14,36 @@ export default class website extends Component {
 		onEditClick: PropTypes.func
 	};
 
+	getStatusStyle = () => {
+		let pingNo = 0;
+
+		this.props.data.lastCheck.map((checkElement) => {
+			if (checkElement.status === 'OK') {
+				pingNo++;
+			}
+		});
+
+		switch (pingNo) {
+			case 3:
+				// Success Color
+				return {
+					backgroundColor: '#5cb85c'
+				};
+			case 2:
+				// Warning Color
+				return {
+					backgroundColor: '#ffae42'
+				};
+			default:
+				// Error Color
+				return {
+					backgroundColor: '#d8000c'
+				};
+		}
+	};
+
 	render() {
 		const { data } = this.props;
-
 		return (
 			<div className="project">
 				<h2>
@@ -26,10 +53,10 @@ export default class website extends Component {
 					</a>
 				</h2>
 				<div className="status-icon">
-					<span />
+					<span style={this.getStatusStyle()} />
 				</div>
 				<p className="project-notify-recipient">
-					<a href="#/" onClick={() => this.props.onEditClick(data.id)} className="open-project-modal">
+					<a href="#/" onClick={() => this.props.onEditClick(data)} className="open-project-modal">
 						Edit Mail Recipients
 					</a>
 				</p>

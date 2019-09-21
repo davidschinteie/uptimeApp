@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import Website from './website';
+import Website from './components/website';
+import Modal from './components/modal';
 import 'bulma/css/bulma.css';
-// import Modal from './modal';
 
 import './index.css';
 
 class App extends React.Component {
 	state = {
 		websites: [],
-		show: false
+		show: false,
+		editingWebsite: {}
 	};
 
 	componentDidMount() {
@@ -21,15 +22,38 @@ class App extends React.Component {
 		);
 	}
 
-	showModal = () => {
-		this.setState({ show: true });
+	showModal = (websiteData) => {
+		this.setState({
+			show: true,
+			editingWebsite: websiteData
+		});
 	};
 
 	hideModal = () => {
 		this.setState({ show: false });
 	};
 
+	updateMails = (id, listOfEmails, listOfEmailsArr) => {
+		// Update the State with the new mail
+		this.setState({
+			websites: this.state.websites.map((website) => {
+				if (website.id === 5) {
+					website.emails = listOfEmailsArr;
+				}
+				return website;
+			})
+		});
+		//
+		axios
+			.put(`http://172.105.73.116/websites/${id}`, {
+				emails: listOfEmails
+			})
+			.then((res) => console.log(res.data));
+	};
+
 	render() {
+		console.log(this.state.websites);
+
 		return (
 			<React.Fragment>
 				<header>
@@ -43,7 +67,12 @@ class App extends React.Component {
 						<h2>Quick Status</h2>
 						<div className="project-table">
 							{this.state.websites.map((website) => {
-								return <Website data={website} onEditClick={() => this.showModal()} />;
+								return (
+									<Website
+										data={website}
+										onEditClick={(websiteData) => this.showModal(websiteData)}
+									/>
+								);
 							})}
 						</div>
 					</div>
@@ -54,55 +83,17 @@ class App extends React.Component {
 						<p className="copyright">Copyright © OKAPI. All rights reserved.</p>
 					</div>
 				</footer>
-				<Modal show={this.state.show} handleClose={this.hideModal}>
-					<p>Modal</p>
-					<p>Data</p>
-				</Modal>
+				<Modal
+					show={this.state.show}
+					handleClose={this.hideModal}
+					editingWebsite={this.state.editingWebsite}
+					addNewMail={this.updateMails}
+					deleteMail={this.updateMails}
+				/>
 			</React.Fragment>
 		);
 	}
 }
-
-const Modal = ({ handleClose, show, children }) => {
-	const showHideClassName = show ? 'modal is-active' : 'modal';
-
-	return (
-		<div className={showHideClassName}>
-			<div className="modal-background" />
-			<div className="modal-content">
-				<form>
-					<h2>Recipients Mails:</h2>
-					<div className="field">
-						<div className="field is-grouped">
-							{children}
-							<div className="mail control">
-								<p>some@mail.com</p>
-								<button className="button is-text">Remove Email</button>
-							</div>
-						</div>
-						<label className="label">New Email:</label>
-						<div className="control has-icons-left has-icons-right">
-							<span className="icon is-small is-left">
-								<i className="fas fa-envelope" />
-							</span>
-							<span className="icon is-small is-right">
-								<i className="fas fa-exclamation-triangle" />
-							</span>
-						</div>
-						<p className="help is-danger">This email is invalid</p>
-					</div>
-					<div className="field is-grouped">
-						<div className="control">
-							<button className="button is-link">Add Email</button>
-						</div>
-					</div>
-				</form>
-			</div>
-			<button className="modal-close is-large" onClick={handleClose} aria-label="close" />
-		</div>
-	);
-};
-
 // ========================================
 
 ReactDOM.render(<App />, document.getElementById('root'));
