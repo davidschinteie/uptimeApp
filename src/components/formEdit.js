@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class form extends Component {
+export default class formEdit extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: 'notification@recipient.mail',
 			inputStyle: { borderColor: '#dbdbdb' },
 			showErrorText: { display: 'none' },
+			disableSubmit: true,
 			buttonStyle: {
 				cursor: 'not-allowed',
 				borderColor: '#A2A7AD',
@@ -34,12 +35,14 @@ export default class form extends Component {
 			this.setState({
 				inputStyle: { borderColor: '#dbdbdb' },
 				showErrorText: { display: 'none' },
+				disableSubmit: false,
 				buttonStyle: {}
 			});
 		} else {
 			this.setState({
 				inputStyle: { borderColor: '#d8000c' },
 				showErrorText: { display: 'inline-block' },
+				disableSubmit: true,
 				buttonStyle: {
 					cursor: 'not-allowed',
 					borderColor: '#A2A7AD',
@@ -80,6 +83,17 @@ export default class form extends Component {
 			sendEmailsArr.push(this.state.value);
 			this.props.addNewMail(this.props.websiteID, sendEmails, sendEmailsArr);
 		}
+
+		this.setState({
+			value: 'notification@recipient.mail',
+			disableSubmit: true,
+			buttonStyle: {
+				cursor: 'not-allowed',
+				borderColor: '#A2A7AD',
+				backgroundColor: '#A2A7AD',
+				opacity: 0.8
+			}
+		});
 	};
 
 	checkEmail = (email) => {
@@ -125,6 +139,7 @@ export default class form extends Component {
 							className="button is-link"
 							onClick={(e) => this.addEmail(e)}
 							style={this.state.buttonStyle}
+							disabled={this.state.disableSubmit}
 						>
 							Add Email
 						</button>

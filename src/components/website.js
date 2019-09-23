@@ -11,34 +11,37 @@ export default class website extends Component {
 				status: PropTypes.oneOf([ 'OK', 'ERROR' ])
 			})
 		}),
-		onEditClick: PropTypes.func
+		onEditClick: PropTypes.func,
+		deleteWebsite: PropTypes.func
 	};
 
 	getStatusStyle = () => {
 		let pingNo = 0;
 
-		this.props.data.lastCheck.map((checkElement) => {
-			if (checkElement.status === 'OK') {
-				pingNo++;
-			}
-		});
+		if (typeof this.props.data.lastCheck !== 'undefined') {
+			this.props.data.lastCheck.map((checkElement) => {
+				if (checkElement.status === 'OK') {
+					pingNo++;
+				}
+			});
 
-		switch (pingNo) {
-			case 3:
-				// Success Color
-				return {
-					backgroundColor: '#5cb85c'
-				};
-			case 2:
-				// Warning Color
-				return {
-					backgroundColor: '#ffae42'
-				};
-			default:
-				// Error Color
-				return {
-					backgroundColor: '#d8000c'
-				};
+			switch (pingNo) {
+				case 3:
+					// Success Color
+					return {
+						backgroundColor: '#5cb85c'
+					};
+				case 2:
+					// Warning Color
+					return {
+						backgroundColor: '#ffae42'
+					};
+				default:
+					// Error Color
+					return {
+						backgroundColor: '#d8000c'
+					};
+			}
 		}
 	};
 
@@ -58,6 +61,9 @@ export default class website extends Component {
 				<p className="project-notify-recipient">
 					<a href="#/" onClick={() => this.props.onEditClick(data)} className="open-project-modal">
 						Edit Mail Recipients
+					</a>
+					<a href="#/" className="delete-project-btn" onClick={() => this.props.deleteWebsite(data.id)}>
+						Delete Project
 					</a>
 				</p>
 			</div>

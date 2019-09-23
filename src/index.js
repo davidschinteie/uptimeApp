@@ -2,15 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Website from './components/website';
-import Modal from './components/modal';
+import ModalEdit from './components/modalEdit';
+import ModalAdd from './components/modalAdd';
 import 'bulma/css/bulma.css';
 
-import './index.css';
+import './index.scss';
 
 class App extends React.Component {
 	state = {
 		websites: [],
-		show: false,
+		showEditModal: false,
+		showAddModal: false,
 		editingWebsite: {}
 	};
 
@@ -22,22 +24,32 @@ class App extends React.Component {
 		);
 	}
 
-	showModal = (websiteData) => {
+	showEditModal = (websiteData) => {
 		this.setState({
-			show: true,
+			showEditModal: true,
 			editingWebsite: websiteData
 		});
 	};
 
-	hideModal = () => {
-		this.setState({ show: false });
+	showAddModal = () => {
+		this.setState({
+			showAddModal: true
+		});
+	};
+
+	hideEditModal = () => {
+		this.setState({ showEditModal: false });
+	};
+
+	hideAddModal = () => {
+		this.setState({ showAddModal: false });
 	};
 
 	updateMails = (id, listOfEmails, listOfEmailsArr) => {
 		// Update the State with the new mail
 		this.setState({
 			websites: this.state.websites.map((website) => {
-				if (website.id === 5) {
+				if (website.id === id) {
 					website.emails = listOfEmailsArr;
 				}
 				return website;
@@ -51,8 +63,27 @@ class App extends React.Component {
 			.then((res) => console.log(res.data));
 	};
 
+	addNewWebsite = (website) => {
+		axios
+			.post('http://172.105.73.116/websites', {
+				name: website.name,
+				url: website.url,
+				emails: website.emails
+			})
+			.then((res) => this.setState({ websites: [ ...this.state.websites, res.data ] }));
+		// console.log(website);
+	};
+
+	deleteWebsite = (id) => {
+		axios
+			.delete(`http://172.105.73.116/websites/${id}`)
+			.then((res) =>
+				this.setState({ websites: [ ...this.state.websites.filter((website) => website.id !== id) ] })
+			);
+	};
+
 	render() {
-		console.log(this.state.websites);
+		// console.log(this.state.websites);
 
 		return (
 			<React.Fragment>
@@ -70,11 +101,15 @@ class App extends React.Component {
 								return (
 									<Website
 										data={website}
-										onEditClick={(websiteData) => this.showModal(websiteData)}
+										onEditClick={(websiteData) => this.showEditModal(websiteData)}
+										deleteWebsite={this.deleteWebsite}
 									/>
 								);
 							})}
 						</div>
+						<a href="#/" onClick={this.showAddModal} class="button is-dark add-new-website-btn">
+							Add new website
+						</a>
 					</div>
 				</main>
 				<footer className="main-section footer-section">
@@ -83,12 +118,17 @@ class App extends React.Component {
 						<p className="copyright">Copyright © OKAPI. All rights reserved.</p>
 					</div>
 				</footer>
-				<Modal
-					show={this.state.show}
-					handleClose={this.hideModal}
+				<ModalEdit
+					showEditModal={this.state.showEditModal}
+					handleEditClose={this.hideEditModal}
 					editingWebsite={this.state.editingWebsite}
 					addNewMail={this.updateMails}
 					deleteMail={this.updateMails}
+				/>
+				<ModalAdd
+					showAddModal={this.state.showAddModal}
+					handleAddModalClose={this.hideAddModal}
+					addNewWebsite={this.addNewWebsite}
 				/>
 			</React.Fragment>
 		);

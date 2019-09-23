@@ -1,0 +1,378 @@
+// Mixins
+//  SPECIFIC MOBILE FIRST BREAKPOINT MIXIN FOR SCREENS
+@mixin breakpoint($args: null) {
+
+  //  CASE IF NO DATA IS PASSED WE SHALL OUTPUT MEDIA QUERY ONLY FOR SCREEN THIS MEANS STYLES WILL BE GLOBALLY AND INHERITABLE BY UPPER BREAKPOINTS
+  @if $args==null {
+    @media screen {
+      @content;
+    }
+  }
+
+  @else if $args=='iphoneX' {
+    @media screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) {
+      @content;
+    }
+  }
+
+  @else if $args=='iphone8' {
+    @media screen and (device-width : 375px) and (device-height : 667px) and (-webkit-device-pixel-ratio : 2) {
+      @content;
+    }
+  }
+
+  @else if $args=='iphone8Plus' {
+    @media screen and (device-width : 414px) and (device-height : 736px) and (-webkit-device-pixel-ratio : 3) {
+      @content;
+    }
+  }
+
+  //  CASE IF DATA IS PASSED WE GENERATE BREAKPOINT FOR PASSED BREAKPOINT
+  @else {
+    @media screen and (min-width: $args) {
+      @content;
+    }
+  }
+}
+
+@mixin breakpoint-reverse($args) {
+  @media screen and (max-width: $args) {
+    @content;
+  }
+}
+
+//	COLORS
+$black : #182A45;
+$blue : #109DFF;
+$dark_blue : #092856;
+$white: #fff;
+$white_smoke: #f5f5f5;
+
+// FONT
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+$font_v1 : 'Roboto',
+sans-serif;
+
+// Typography
+h1 {
+  @include breakpoint() {
+    font-weight: 600;
+    margin-bottom: 30px;
+    line-height: 33px;
+    font-size: 30px;
+  }
+
+  @include breakpoint(375px) {
+    margin-bottom: 40px;
+  }
+
+  @include breakpoint(768px) {
+    line-height: 40px;
+    font-size: 36px;
+  }
+
+  @include breakpoint(900px) {
+    margin-bottom: 50px;
+    line-height: 47px;
+    font-size: 42px;
+  }
+
+  @include breakpoint-reverse(630px) {
+    letter-spacing: -0.47px;
+  }
+}
+
+h2 {
+  @include breakpoint() {
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  @include breakpoint(768px) {
+    font-size: 40px;
+    line-height: 47px;
+  }
+}
+
+h3 {
+  @include breakpoint() {
+    color: $dark_blue;
+    font-size: 20px;
+    line-height: 21px;
+    line-height: 28px;
+    margin-bottom: 30px;
+    font-weight: normal;
+  }
+
+  @include breakpoint(768px) {
+    font-size: 24px;
+    line-height: 32px;
+    // margin-bottom: 40px;
+  }
+
+  @include breakpoint(900px) {
+    font-size: 28px;
+    line-height: 38px;
+    // margin-bottom: 30px;
+  }
+}
+
+a,
+button {
+  @include breakpoint() {
+    font-family: $font_v1;
+    text-decoration: none;
+    color: $blue;
+
+    // color: $main-theme__color;
+    &:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &.logo {
+    @include breakpoint() {
+      display: inline-block;
+      --logo-height: 40px;
+      --logo-width: 100px;
+      width: var(--logo-width);
+      height: var(--logo-height);
+      background-image: url("./img/logo.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+      margin-right: 100px;
+      margin-right: auto;
+      flex: 0 0 var(--logo-width);
+    }
+
+    @include breakpoint(375px) {
+      --logo-height: 59px;
+      --logo-width: 147px;
+    }
+
+    @include breakpoint(1088px) {
+      margin-right: calc((100%/3) - var(--logo-width) + 12px);
+    }
+
+    @include breakpoint(1280px) {
+      --logo-width: 170px;
+      --logo-width: 230px;
+      --logo-height: 92px;
+      margin-right: 110px;
+    }
+  }
+
+  &.logo-footer {
+    @include breakpoint() {
+      --logo-width: 147px;
+      height: 39px;
+      background-image: url("./img/logo-white.svg");
+      margin-bottom: 25px;
+    }
+
+    @include breakpoint(375px) {
+      margin-bottom: 31px;
+    }
+
+    @include breakpoint(900px) {
+      --logo-width: 108px;
+      height: 29px;
+      margin-bottom: 23px;
+    }
+  }
+}
+
+// Wrapper
+.wrapper {
+  @include breakpoint() {
+    margin: 0 auto;
+    --wrapper-gutter: 25px;
+    padding: 0 var(--wrapper-gutter);
+    width: 100%;
+    position: relative;
+  }
+
+  @include breakpoint(375px) {
+    --wrapper-gutter: 30px;
+  }
+
+  @include breakpoint(768px) {
+    --wrapper-gutter: 70px;
+  }
+
+  @include breakpoint(1280px) {
+    padding: 0;
+    max-width: 1000px;
+  }
+
+  @include breakpoint(1440px) {
+    max-width: 1000px;
+  }
+
+  @include breakpoint(1515px) {
+    max-width: 1300px;
+  }
+
+  &.centered-elements {
+    @include breakpoint() {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.wrapper-fluid {
+  @include breakpoint() {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+
+body #root {
+  @include breakpoint() {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+}
+
+.main-section {
+  @include breakpoint() {
+    flex: 1 0 auto;
+  }
+}
+
+// App Sections
+header {
+  @include breakpoint() {
+    margin-top: 100px;
+  }
+}
+
+.footer-section {
+  @include breakpoint() {
+    background-color: $black;
+    color: $white;
+    padding: 90px 0;
+    margin-top: 100px;
+    flex: none;
+  }
+
+  @include breakpoint(375px) {
+    padding: 90px 0;
+  }
+
+  @include breakpoint(768px) {
+    padding: 106px 0;
+  }
+
+  @include breakpoint(1000px) {
+    margin-top: 120px;
+  }
+}
+
+.project-table {
+  @include breakpoint() {
+    width: 100%;
+    background-color: $white_smoke;
+    margin-top: 40px;
+  }
+
+  .project {
+    @include breakpoint() {
+      display: flex;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      @include breakpoint() {
+        width: 40%;
+      }
+    }
+
+
+    .status-icon {
+      width: 20%;
+    }
+
+    h2 {
+      @include breakpoint() {
+        font-weight: 600;
+        font-size: 1.75rem;
+        line-height: 118%;
+        word-break: break-all;
+      }
+
+      a {
+        @include breakpoint() {
+          font-size: 16px;
+          line-height: 206%;
+          text-decoration-line: underline;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.project-notify-recipient {
+  text-align: right;
+  padding-top: 9px;
+  width: 40%;
+}
+
+.delete-project-btn {
+  @include breakpoint() {
+    margin-left: 25px;
+  }
+}
+
+.status-icon {
+  @include breakpoint() {
+    display: flex;
+    justify-content: center;
+    padding-top: 11px;
+  }
+
+  span {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-color: #5cb85c;
+    border-radius: 50%;
+  }
+}
+
+// Modal
+.modal-content {
+  padding: 50px;
+  background: $white_smoke;
+  border-radius: 25px;
+
+  p {
+    display: inline-block;
+  }
+
+  .mail.control {
+    @include breakpoint() {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    button {
+      margin-left: auto;
+    }
+  }
+}

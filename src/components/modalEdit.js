@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Form from './form';
+import FormEdit from './formEdit';
 
-export default class modal extends Component {
+export default class modalEdit extends Component {
 	static propTypes = {
-		show: PropTypes.bool,
+		showEditModal: PropTypes.bool,
 		editingWebsite: PropTypes.object,
 		addNewMail: PropTypes.func,
 		deleteMail: PropTypes.func
@@ -25,9 +25,10 @@ export default class modal extends Component {
 		this.props.deleteMail(this.props.editingWebsite.id, newEmails, newEmailsArr);
 	};
 
+	closeModal = () => {};
+
 	render() {
-		// handleClose, show, children
-		const { show, editingWebsite } = this.props;
+		const { showEditModal, editingWebsite } = this.props;
 
 		let recipientEmails;
 
@@ -47,18 +48,22 @@ export default class modal extends Component {
 		}
 
 		return (
-			<div className={show ? 'modal is-active' : 'modal'}>
+			<div className={showEditModal ? 'modal is-active' : 'modal'}>
 				<div className="modal-background" />
 				<div className="modal-content">
 					<h2>Recipients Mails:</h2>
 					{recipientEmails}
-					<Form
+					<FormEdit
 						websiteID={editingWebsite.id}
 						listOfEmails={editingWebsite.emails}
 						addNewMail={this.props.addNewMail}
 					/>
 				</div>
-				<button className="modal-close is-large" onClick={() => this.props.handleClose()} aria-label="close" />
+				<button
+					className="modal-close is-large"
+					onClick={() => this.props.handleEditClose()}
+					aria-label="close"
+				/>
 			</div>
 		);
 	}
