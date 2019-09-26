@@ -4,6 +4,7 @@ import axios from 'axios';
 import Website from './components/website';
 import ModalEdit from './components/modalEdit';
 import ModalAdd from './components/modalAdd';
+import ModalDelete from './components/modalDelete';
 import 'bulma/css/bulma.css';
 
 import './index.scss';
@@ -13,6 +14,8 @@ class App extends React.Component {
 		websites: [],
 		showEditModal: false,
 		showAddModal: false,
+		showDeleteModal: false,
+		deleteWebsiteID: null,
 		editingWebsite: {}
 	};
 
@@ -23,6 +26,13 @@ class App extends React.Component {
 			})
 		);
 	}
+
+	showDeleteModal = (websiteID) => {
+		this.setState({
+			showDeleteModal: true,
+			deleteWebsiteID: websiteID
+		});
+	};
 
 	showEditModal = (websiteData) => {
 		this.setState({
@@ -45,6 +55,10 @@ class App extends React.Component {
 		this.setState({ showAddModal: false });
 	};
 
+	hideDeleteModal = () => {
+		this.setState({ showDeleteModal: false });
+	};
+
 	updateMails = (id, listOfEmails, listOfEmailsArr) => {
 		// Update the State with the new mail
 		this.setState({
@@ -64,6 +78,7 @@ class App extends React.Component {
 	};
 
 	addNewWebsite = (website) => {
+		this.hideAddModal();
 		axios
 			.post('http://172.105.73.116/websites', {
 				name: website.name,
@@ -75,6 +90,7 @@ class App extends React.Component {
 	};
 
 	deleteWebsite = (id) => {
+		this.hideDeleteModal();
 		axios
 			.delete(`http://172.105.73.116/websites/${id}`)
 			.then((res) =>
@@ -102,6 +118,7 @@ class App extends React.Component {
 									<Website
 										data={website}
 										onEditClick={(websiteData) => this.showEditModal(websiteData)}
+										onDeleteClick={(websiteID) => this.showDeleteModal(websiteID)}
 										deleteWebsite={this.deleteWebsite}
 									/>
 								);
@@ -129,6 +146,12 @@ class App extends React.Component {
 					showAddModal={this.state.showAddModal}
 					handleAddModalClose={this.hideAddModal}
 					addNewWebsite={this.addNewWebsite}
+				/>
+				<ModalDelete
+					showDeleteModal={this.state.showDeleteModal}
+					handleDeleteModalClose={this.hideDeleteModal}
+					deleteWebsiteID={this.state.deleteWebsiteID}
+					deleteWebsite={this.deleteWebsite}
 				/>
 			</React.Fragment>
 		);

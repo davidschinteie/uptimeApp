@@ -12,6 +12,7 @@ export default class website extends Component {
 			})
 		}),
 		onEditClick: PropTypes.func,
+		onDeleteClick: PropTypes.func,
 		deleteWebsite: PropTypes.func
 	};
 
@@ -62,7 +63,7 @@ export default class website extends Component {
 					<a href="#/" onClick={() => this.props.onEditClick(data)} className="open-project-modal">
 						Edit Mail Recipients
 					</a>
-					<a href="#/" className="delete-project-btn" onClick={() => this.props.deleteWebsite(data.id)}>
+					<a href="#/" className="delete-project-btn" onClick={() => this.props.onDeleteClick(data.id)}>
 						Delete Project
 					</a>
 				</p>

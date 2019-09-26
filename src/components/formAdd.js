@@ -8,7 +8,9 @@ export default class formAdd extends Component {
 			nameValue: '',
 			urlValue: '',
 			emailValue: 'notification@recipient.mail',
-			inputStyle: { borderColor: '#dbdbdb' },
+			inputStyle: {
+				borderColor: '#dbdbdb'
+			},
 			showErrorText: { display: 'none' },
 			disableSubmit: true,
 			buttonStyle: {
@@ -37,18 +39,24 @@ export default class formAdd extends Component {
 	}
 
 	handleEmailChange(event) {
-		this.setState({ emailValue: event.target.value });
+		this.setState({
+			emailValue: event.target.value
+		});
 
 		if (this.checkEmail(event.target.value)) {
 			this.setState({
-				inputStyle: { borderColor: '#dbdbdb' },
+				inputStyle: {
+					borderColor: '#dbdbdb'
+				},
 				showErrorText: { display: 'none' },
 				disableSubmit: false,
 				buttonStyle: {}
 			});
 		} else {
 			this.setState({
-				inputStyle: { borderColor: '#d8000c' },
+				inputStyle: {
+					borderColor: '#d8000c'
+				},
 				showErrorText: { display: 'inline-block' },
 				disableSubmit: true,
 				buttonStyle: {
@@ -149,7 +157,7 @@ export default class formAdd extends Component {
 
 				<div className="field">
 					<label className="label">Email</label>
-					<div className="control has-icons-left has-icons-right">
+					<div className="control multiple-emails">
 						<input
 							className="input"
 							type="email"
@@ -161,12 +169,6 @@ export default class formAdd extends Component {
 							onChange={this.handleEmailChange}
 							style={this.state.inputStyle}
 						/>
-						<span className="icon is-small is-left">
-							<i className="fas fa-envelope" />
-						</span>
-						<span className="icon is-small is-right">
-							<i className="fas fa-exclamation-triangle" />
-						</span>
 					</div>
 					<p className="help is-danger" style={this.state.showErrorText}>
 						This email is invalid

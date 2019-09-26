@@ -376,3 +376,33 @@ header {
     }
   }
 }
+
+.modal-delete {
+  .buttons-wrapper {
+    text-align: center;
+  }
+
+  h2 {
+    @include breakpoint() {
+      margin-bottom: 32px;
+    }
+  }
+
+  .is-danger {
+    @include breakpoint() {
+      margin-right: 32px;
+    }
+  }
+}
+
+.multiple-emails {
+  input {
+    @include breakpoint() {
+      // border: none;
+      // box-shadow: none;
+      // background: transparent;
+      // padding: 0;
+      // width: auto;
+    }
+  }
+}

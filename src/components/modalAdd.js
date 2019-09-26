@@ -5,7 +5,7 @@ import FormAdd from './formAdd';
 export default class modalAdd extends Component {
 	static propTypes = {
 		showAddModal: PropTypes.bool,
-		addNewMail: PropTypes.func
+		addNewWebsite: PropTypes.func
 	};
 
 	render() {
