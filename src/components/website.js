@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class website extends Component {
+export default class Website extends Component {
 	static propTypes = {
 		data: PropTypes.shape({
 			name: PropTypes.string,
@@ -61,12 +61,12 @@ export default class website extends Component {
 					<span style={this.getStatusStyle()} />
 				</div>
 				<p className="project-notify-recipient">
-					<a href="#/" onClick={() => this.props.onEditClick(data)} className="open-project-modal">
+					<button onClick={() => this.props.onEditClick(data)} className="open-project-modal">
 						Edit Mail Recipients
-					</a>
-					<a href="#/" className="delete-project-btn" onClick={() => this.props.onDeleteClick(data.id)}>
+					</button>
+					<button className="delete-project-btn" onClick={() => this.props.onDeleteClick(data.id)}>
 						Delete Project
-					</a>
+					</button>
 				</p>
 			</div>
 		);

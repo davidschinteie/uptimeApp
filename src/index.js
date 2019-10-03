@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import Website from './components/website';
 import ModalEdit from './components/modalEdit';
 import ModalAdd from './components/modalAdd';
@@ -8,6 +7,7 @@ import ModalDelete from './components/modalDelete';
 import 'bulma/css/bulma.css';
 
 import './index.scss';
+import Services from './services/api';
 
 class App extends React.Component {
 	state = {
@@ -20,23 +20,27 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		axios.get('http://172.105.73.116/api/websites').then((res) =>
-			this.setState({
-				websites: res.data
-			})
-		);
+		this.getWebsites();
 		this.interval = setInterval(
-			() =>
-				axios.get('http://172.105.73.116/api/websites').then((res) =>
-					this.setState({
-						websites: res.data
-					})
-				),
-			60000
+			() => {
+				this.getWebsites();
+			}, 60000
 		);
 	}
 
-	componentWillMount() {
+	getWebsites() {
+		Services.getAll()
+			.then((res) =>
+				this.setState({
+					websites: res.data
+				}, () => console.log(this.state.websites))
+			)
+			.catch(err => {
+				console.log(err)
+			})
+	}
+
+	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
 
@@ -74,46 +78,46 @@ class App extends React.Component {
 
 	updateMails = (id, listOfEmails, listOfEmailsArr) => {
 		// Update the State with the new mail
-		this.setState({
-			websites: this.state.websites.map((website) => {
-				if (website.id === id) {
-					website.emails = listOfEmailsArr;
-				}
-				return website;
-			})
-		});
-		//
-		axios
-			.put(`http://172.105.73.116/api/websites/${id}`, {
-				emails: listOfEmails
-			})
-			.then((res) => console.log(res.data));
+
+		Services.updateMail(id, listOfEmails)
+			.then((res) => {
+				this.setState({
+					websites: this.state.websites.map((website) => {
+						if (website.id === id) {
+							website.emails = listOfEmailsArr;
+						}
+						return website;
+					})
+				});
+			});
 	};
 
 	addNewWebsite = (website) => {
 		this.hideAddModal();
-		axios
-			.post('http://172.105.73.116/api/websites', {
-				name: website.name,
-				url: website.url,
-				emails: website.emails
-			})
-			.then((res) => this.setState({ websites: [ ...this.state.websites, res.data ] }));
+		Services.addWebsite({
+			name: website.name,
+			url: website.url,
+			emails: website.emails
+		})
+			.then((res) => {
+				this.setState({
+					websites: [ ...this.state.websites, res.data ]
+				})
+			});
 		// console.log(website);
 	};
 
 	deleteWebsite = (id) => {
 		this.hideDeleteModal();
-		axios
-			.delete(`http://172.105.73.116/api/websites/${id}`)
+		Services.removeWebsite(id)
 			.then((res) =>
-				this.setState({ websites: [ ...this.state.websites.filter((website) => website.id !== id) ] })
+				this.setState({websites: this.state.websites.filter((website) => website.id !== id)})
 			);
 	};
 
 	render() {
 		// console.log(this.state.websites);
-
+	console.log('asd');
 		return (
 			<React.Fragment>
 				<header>
@@ -126,9 +130,11 @@ class App extends React.Component {
 					<div className="wrapper">
 						<h2>Quick Status</h2>
 						<div className="project-table">
-							{this.state.websites.map((website) => {
+							{/*neaparat cand randezi elemente multiple sa ii asociezi o cheie unica*/}
+							{this.state.websites.map((website, key) => {
 								return (
 									<Website
+										key={key}
 										data={website}
 										onEditClick={(websiteData) => this.showEditModal(websiteData)}
 										onDeleteClick={(websiteID) => this.showDeleteModal(websiteID)}
@@ -137,39 +143,39 @@ class App extends React.Component {
 								);
 							})}
 						</div>
-						<a href="#/" onClick={this.showAddModal} className="button is-dark add-new-website-btn">
+						<button onClick={this.showAddModal} className="button is-dark add-new-website-btn">
 							Add new website
-						</a>
+						</button>
 					</div>
 				</main>
 				<footer className="main-section footer-section">
 					<div className="wrapper">
-						<a href="http://okapistudio.com" className="logo logo-footer" />
+						<a href="http://okapistudio.com" target="_blank" className="logo logo-footer"/>
 						<p className="copyright">Copyright © OKAPI. All rights reserved.</p>
 					</div>
 				</footer>
-				<ModalEdit
+				{/*nu randa elemente care nu sunt vizibile... evita sa folosesti display none si opacity.. poti pur si simplu sa nu le randezi*/}
+				{this.state.showEditModal && <ModalEdit
 					showEditModal={this.state.showEditModal}
 					handleEditClose={this.hideEditModal}
 					editingWebsite={this.state.editingWebsite}
 					addNewMail={this.updateMails}
 					deleteMail={this.updateMails}
-				/>
-				<ModalAdd
+				/>}
+				{this.state.showAddModal && <ModalAdd
 					showAddModal={this.state.showAddModal}
 					handleAddModalClose={this.hideAddModal}
 					addNewWebsite={this.addNewWebsite}
-				/>
-				<ModalDelete
+				/>}
+				{this.state.showDeleteModal && <ModalDelete
 					showDeleteModal={this.state.showDeleteModal}
 					handleDeleteModalClose={this.hideDeleteModal}
 					deleteWebsiteID={this.state.deleteWebsiteID}
 					deleteWebsite={this.deleteWebsite}
-				/>
+				/>}
 			</React.Fragment>
 		);
 	}
 }
-// ========================================
 
 ReactDOM.render(<App />, document.getElementById('root'));

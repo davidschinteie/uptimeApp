@@ -42,15 +42,16 @@ export default class formAdd extends Component {
 		this.setState({
 			emailValue: event.target.value
 		});
-
+		// pentru validare incearca sa te folosesti doar de o variabila de care sa te folosesti peste tot unde ai nevoie...
 		if (this.checkEmail(event.target.value)) {
 			this.setState({
-				inputStyle: {
-					borderColor: '#dbdbdb'
-				},
-				showErrorText: { display: 'none' },
-				disableSubmit: false,
-				buttonStyle: {}
+				error: true
+				// inputStyle: {
+				// 	borderColor: '#dbdbdb'
+				// },
+				// showErrorText: { display: 'none' },
+				// disableSubmit: false,
+				// buttonStyle: {}
 			});
 		} else {
 			this.setState({
@@ -159,7 +160,7 @@ export default class formAdd extends Component {
 					<label className="label">Email</label>
 					<div className="control multiple-emails">
 						<input
-							className="input"
+							className={`input ${this.state.error ? 'error': ''}`}
 							type="email"
 							placeholder="Email input"
 							name="email"
@@ -167,12 +168,12 @@ export default class formAdd extends Component {
 							onFocus={this.onFocus}
 							onBlur={this.onBlur}
 							onChange={this.handleEmailChange}
-							style={this.state.inputStyle}
+							style={this.state.error && {color: 'red', borderColor: 'red'}}
 						/>
 					</div>
-					<p className="help is-danger" style={this.state.showErrorText}>
+					{this.state.error && <p className="help is-danger" >
 						This email is invalid
-					</p>
+					</p>}
 				</div>
 
 				<div className="field is-grouped">
@@ -181,7 +182,7 @@ export default class formAdd extends Component {
 							className="button is-link"
 							onClick={(e) => this.addWebsite(e)}
 							style={this.state.buttonStyle}
-							disabled={this.state.disableSubmit}
+							disabled={this.state.error}
 						>
 							Add Website
 						</button>

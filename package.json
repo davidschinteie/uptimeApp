@@ -4,13 +4,17 @@
   "private": true,
   "dependencies": {
     "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "build-dev": "REACT_APP_ENV=development npm-run-all build-css build-js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && rsync --delete --recursive --progress ./build/* root@172.105.73.116:/home/okapiuptime/public"
