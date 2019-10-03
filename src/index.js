@@ -20,11 +20,24 @@ class App extends React.Component {
 	};
 
 	componentDidMount() {
-		axios.get('http://172.105.73.116/websites').then((res) =>
+		axios.get('http://172.105.73.116/api/websites').then((res) =>
 			this.setState({
 				websites: res.data
 			})
 		);
+		this.interval = setInterval(
+			() =>
+				axios.get('http://172.105.73.116/api/websites').then((res) =>
+					this.setState({
+						websites: res.data
+					})
+				),
+			60000
+		);
+	}
+
+	componentWillMount() {
+		clearInterval(this.interval);
 	}
 
 	showDeleteModal = (websiteID) => {
@@ -71,7 +84,7 @@ class App extends React.Component {
 		});
 		//
 		axios
-			.put(`http://172.105.73.116/websites/${id}`, {
+			.put(`http://172.105.73.116/api/websites/${id}`, {
 				emails: listOfEmails
 			})
 			.then((res) => console.log(res.data));
@@ -80,7 +93,7 @@ class App extends React.Component {
 	addNewWebsite = (website) => {
 		this.hideAddModal();
 		axios
-			.post('http://172.105.73.116/websites', {
+			.post('http://172.105.73.116/api/websites', {
 				name: website.name,
 				url: website.url,
 				emails: website.emails
@@ -92,7 +105,7 @@ class App extends React.Component {
 	deleteWebsite = (id) => {
 		this.hideDeleteModal();
 		axios
-			.delete(`http://172.105.73.116/websites/${id}`)
+			.delete(`http://172.105.73.116/api/websites/${id}`)
 			.then((res) =>
 				this.setState({ websites: [ ...this.state.websites.filter((website) => website.id !== id) ] })
 			);
@@ -124,7 +137,7 @@ class App extends React.Component {
 								);
 							})}
 						</div>
-						<a href="#/" onClick={this.showAddModal} class="button is-dark add-new-website-btn">
+						<a href="#/" onClick={this.showAddModal} className="button is-dark add-new-website-btn">
 							Add new website
 						</a>
 					</div>

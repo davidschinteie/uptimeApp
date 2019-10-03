@@ -54,7 +54,7 @@ export default class formEdit extends Component {
 	}
 
 	onFocus() {
-		if (this.state.value == 'notification@recipient.mail') {
+		if (this.state.value === 'notification@recipient.mail') {
 			this.setState({
 				value: ''
 			});
@@ -62,7 +62,7 @@ export default class formEdit extends Component {
 	}
 
 	onBlur() {
-		if (this.state.value == '') {
+		if (this.state.value === '') {
 			this.setState({
 				value: 'notification@recipient.mail'
 			});

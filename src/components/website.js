@@ -8,7 +8,8 @@ export default class website extends Component {
 			url: PropTypes.string,
 			lastCheck: PropTypes.arrayOf({
 				responseTime: PropTypes.number,
-				status: PropTypes.oneOf([ 'OK', 'ERROR' ])
+				status: PropTypes.oneOf([ 'OK', 'ERROR' ]),
+				timestamp: PropTypes.timestamp
 			})
 		}),
 		onEditClick: PropTypes.func,

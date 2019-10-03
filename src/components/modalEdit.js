@@ -15,7 +15,7 @@ export default class modalEdit extends Component {
 		// ??????
 		let newEmailsArr = [];
 		this.props.editingWebsite.emails.forEach(function(mail, index) {
-			if (mail != email) {
+			if (mail !== email) {
 				newEmails += `${mail},`;
 				newEmailsArr.push(mail);
 			}

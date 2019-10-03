@@ -31,9 +31,9 @@ export default class formAdd extends Component {
 	};
 
 	handleChange(event) {
-		if (event.target.name == 'name') {
+		if (event.target.name === 'name') {
 			this.setState({ nameValue: event.target.value });
-		} else if (event.target.name == 'url') {
+		} else if (event.target.name === 'url') {
 			this.setState({ urlValue: event.target.value });
 		}
 	}
@@ -70,7 +70,7 @@ export default class formAdd extends Component {
 	}
 
 	onFocus() {
-		if (this.state.emailValue == 'notification@recipient.mail') {
+		if (this.state.emailValue === 'notification@recipient.mail') {
 			this.setState({
 				emailValue: ''
 			});
@@ -78,15 +78,15 @@ export default class formAdd extends Component {
 	}
 
 	onBlur(event) {
-		if (event.target.name == 'email' && this.state.emailValue == '') {
+		if (event.target.name === 'email' && this.state.emailValue === '') {
 			this.setState({
 				emailValue: 'notification@recipient.mail'
 			});
-		} else if (event.target.name == 'name') {
+		} else if (event.target.name === 'name') {
 			this.setState({
 				nameValue: event.target.value
 			});
-		} else if (event.target.name == 'url') {
+		} else if (event.target.name === 'url') {
 			this.setState({
 				urlValue: event.target.value
 			});
