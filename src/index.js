@@ -6,12 +6,14 @@ import ModalEdit from './components/modalEdit';
 import ModalAdd from './components/modalAdd';
 import ModalDelete from './components/modalDelete';
 import 'bulma/css/bulma.css';
+import loading from './img/loading.gif';
 
 import './index.scss';
 
 class App extends React.Component {
 	state = {
 		websites: [],
+		fetchInProgress: true,
 		showEditModal: false,
 		showAddModal: false,
 		showDeleteModal: false,
@@ -22,7 +24,8 @@ class App extends React.Component {
 	componentDidMount() {
 		axios.get('http://172.105.73.116/api/websites').then((res) =>
 			this.setState({
-				websites: res.data
+				websites: res.data,
+				fetchInProgress: false
 			})
 		);
 		this.interval = setInterval(
@@ -36,7 +39,7 @@ class App extends React.Component {
 		);
 	}
 
-	componentWillMount() {
+	componentWillUnmount() {
 		clearInterval(this.interval);
 	}
 
@@ -122,26 +125,34 @@ class App extends React.Component {
 						<h3>Verifies whenever your project goes down and sends a notification.</h3>
 					</div>
 				</header>
-				<main className="main-section">
-					<div className="wrapper">
-						<h2>Quick Status</h2>
-						<div className="project-table">
-							{this.state.websites.map((website) => {
-								return (
-									<Website
-										data={website}
-										onEditClick={(websiteData) => this.showEditModal(websiteData)}
-										onDeleteClick={(websiteID) => this.showDeleteModal(websiteID)}
-										deleteWebsite={this.deleteWebsite}
-									/>
-								);
-							})}
+				{this.state.fetchInProgress ? (
+					<section className="loading">
+						<div className="wrapper">
+							<img src={loading} alt="" />
 						</div>
-						<a href="#/" onClick={this.showAddModal} className="button is-dark add-new-website-btn">
-							Add new website
-						</a>
-					</div>
-				</main>
+					</section>
+				) : (
+					<main className="main-section">
+						<div className="wrapper">
+							<h2>Quick Status</h2>
+							<div className="project-table">
+								{this.state.websites.map((website) => {
+									return (
+										<Website
+											data={website}
+											onEditClick={(websiteData) => this.showEditModal(websiteData)}
+											onDeleteClick={(websiteID) => this.showDeleteModal(websiteID)}
+											deleteWebsite={this.deleteWebsite}
+										/>
+									);
+								})}
+							</div>
+							<a href="#/" onClick={this.showAddModal} className="button is-dark add-new-website-btn">
+								Add new website
+							</a>
+						</div>
+					</main>
+				)}
 				<footer className="main-section footer-section">
 					<div className="wrapper">
 						<a href="http://okapistudio.com" className="logo logo-footer" />
